@@ -1,0 +1,25 @@
+.card-container {
+    margin-left: 20px;
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+
+.card {
+    text-align: center;
+    height: 150px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.total-tickets {
+    background-color: rgba(0, 0, 255, 0.3);
+}
+
+.pending {
+    background-color: rgba(255, 166, 0, 0.3);
+}
+
+.completed {
+    background-color: rgba(0, 255, 0, 0.3);
+}

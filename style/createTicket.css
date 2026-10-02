@@ -1,0 +1,21 @@
+form {
+    padding: 20px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.input-name {
+    width: 60%;
+    margin: 10px;
+}
+
+.form-container {
+    border:  1px solid #DBEAFE;
+    width: 86vw;
+    margin-left: 20px;
+}
+
+textarea {
+    width: 60%;
+}
