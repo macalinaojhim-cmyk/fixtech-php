@@ -16,10 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }elseif(!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)){
         $error = "weak password, must contain special chars";
     } else {
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         array_push($_SESSION["users"], [
             "username" => $username,
-            "password" => $hashedPassword
+            "password" => password_hash($password, PASSWORD_BCRYPT)
         ]);
         header("Location: login.php");
         exit;
