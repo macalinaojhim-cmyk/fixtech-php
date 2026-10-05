@@ -67,7 +67,7 @@ if (isset($_POST["delete_ticket"])) {
                                 <td>
                                     <form method="POST">
                                         <input type="hidden" name="ticket_index" value="<?= $index ?>">
-                                        <button type="submit" name="delete_ticket">
+                                        <button type="submit" name="delete_ticket" class="delete-btn">
                                             <i data-lucide="trash-2"></i>
                                         </button>
                                     </form>

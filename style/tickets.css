@@ -55,3 +55,13 @@ th, td {
     text-align: center;
     border: #DBEAFE 1px solid;
 }
+
+.delete-btn {
+    border: none;
+    color: rgb(58, 58, 246);
+    background-color: white;
+    
+}
+.delete-btn:hover {
+    color: red;
+}
