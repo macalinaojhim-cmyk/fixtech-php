@@ -1,6 +1,12 @@
 <?php
 session_start();
 require("data.php");
+if (isset($_POST["delete_ticket"])) {
+    $index = $_POST["ticket_index"];
+
+    unset($_SESSION["tickets"][$index]);
+    $_SESSION["tickets"] = array_values($_SESSION["tickets"]);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,23 +56,34 @@ require("data.php");
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                            foreach($_SESSION["tickets"] as $ticket){?>
-                                <tr>
-                                    <?php 
-                                        foreach($ticket as $val){?>
-                                            <td><?= $val ?></td>
-                                        <?php }
-                                    ?>
-                                    <td></td>
-                                </tr>
-                            <?php }
+                        <?php
+                        foreach ($_SESSION["tickets"] as $index => $ticket) { ?>
+                            <tr>
+                                <?php
+                                foreach ($ticket as $val) { ?>
+                                    <td><?= htmlspecialchars($val) ?></td>
+                                <?php }
+                                ?>
+                                <td>
+                                    <form method="POST">
+                                        <input type="hidden" name="ticket_index" value="<?= $index ?>">
+                                        <button type="submit" name="delete_ticket">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php }
                         ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

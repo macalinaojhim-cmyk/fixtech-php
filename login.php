@@ -6,8 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (empty($_POST["username"]) || empty($_POST["password"])) {
         $error = "Invalid Credentials";
     } else {
+
         foreach ($_SESSION["users"] as $user) {
-            if ($_POST["username"] === $user["username"] && $_POST["password"] === $user["password"]) {
+            if ($_POST["username"] === $user["username"] && password_verify($_POST["password"],$user["password"] )) {
                 $_SESSION["current-user"] = $_POST["username"];
                 header("Location: home.php");
                 exit;
