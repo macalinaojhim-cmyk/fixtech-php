@@ -6,13 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (empty($_POST["username"]) || empty($_POST["password"])) {
         $error = "Invalid Credentials";
     } else {
-
-        foreach ($_SESSION["users"] as $user) {
-            if ($_POST["username"] === $user["username"] && password_verify($_POST["password"],$user["password"] )) {
-                $_SESSION["current-user"] = $_POST["username"];
+        $reqUser = $_POST["username"];
+        $req = "SELECT * FROM users WHERE username = '$reqUser'";
+        $result = mysqli_query($conn, $req);
+        
+        if(mysqli_num_rows($result) > 0){
+            $user = mysqli_fetch_assoc($result);
+            if($verifyPass = password_verify($_POST["password"], $user["password"])){
+                $_SESSION["isLoged"] = true;
                 header("Location: home.php");
                 exit;
-            } else {
+            }else {
                 $error = "Invalid Credentials";
             }
         }

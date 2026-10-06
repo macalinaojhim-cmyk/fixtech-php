@@ -1,6 +1,13 @@
 <?php
 session_start();
 require("data.php");
+if ($_SESSION["isLoged"] === false) {
+    header("Location: login.php");
+    exit;
+}
+
+
+
 if (isset($_POST["delete_ticket"])) {
     $index = $_POST["ticket_index"];
 
@@ -59,14 +66,16 @@ if (isset($_POST["delete_ticket"])) {
                         <?php
                         foreach ($_SESSION["tickets"] as $index => $ticket) { ?>
                             <tr>
-                                <?php
-                                foreach ($ticket as $val) { ?>
-                                    <td><?= htmlspecialchars($val) ?></td>
-                                <?php }
-                                ?>
+                                <td><?= htmlspecialchars($ticket["name"]) ?></td>
+                                <td><?= htmlspecialchars($ticket["device"]) ?></td>
+                                <td><?= htmlspecialchars($ticket["problem"]) ?></td>
+                                <td><?= htmlspecialchars($ticket["priority"]) ?></td>
+                                <td><?= htmlspecialchars($ticket["status"]) ?></td>
+
                                 <td>
                                     <form method="POST">
-                                        <input type="hidden" name="ticket_index" value="<?= $index ?>">
+                                        <input type="hidden" name="ticket_id" value="<?= $ticket["id"] ?>">
+
                                         <button type="submit" name="delete_ticket" class="delete-btn">
                                             <i data-lucide="trash-2"></i>
                                         </button>

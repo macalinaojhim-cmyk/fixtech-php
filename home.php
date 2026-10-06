@@ -2,6 +2,10 @@
 session_start();
 
 require("data.php");
+if ($_SESSION["isLoged"] === false){
+    header("Location: login.php");
+    exit;
+}
 $pendings = 0;
 $completed = 0;
 

@@ -1,6 +1,10 @@
 <?php
 session_start();
 require("data.php");
+if ($_SESSION["isLoged"] === false){
+    header("Location: login.php");
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (!empty($_POST["name"]) && !empty($_POST["priority"])) {

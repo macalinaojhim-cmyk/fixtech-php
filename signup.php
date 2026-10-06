@@ -5,6 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $username = $_POST["username"];
     $password = $_POST["password"];
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $confirmPassword = $_POST["confirm-password"];
 
     if (empty($_POST["username"]) || empty($_POST["password"])) {
@@ -13,15 +14,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $error = "Password must be at least 8 characters";
     } elseif ($password !== $confirmPassword) {
         $error = "Password didn't matched";
-    }elseif(!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)){
+    } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)) {
         $error = "weak password, must contain special chars";
     } else {
-        array_push($_SESSION["users"], [
-            "username" => $username,
-            "password" => password_hash($password, PASSWORD_BCRYPT)
-        ]);
-        header("Location: login.php");
-        exit;
+        $newUser = "INSERT INTO users (username, password)
+                VALUES ('$username', '$hashedPassword')";
+        try {
+            mysqli_query($conn, $newUser);
+            header("Location: login.php");
+            exit;
+        } catch (mysqli_sql_exception) {
+            echo "Something went wrong";
+        }
     }
 }
 ?>
@@ -49,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     Password:
                     <input type="password" name="password">
                 </label>
-                 <label for="">
+                <label for="">
                     Confirm Password:
                     <input type="password" name="confirm-password">
                 </label>
